@@ -1,8 +1,11 @@
 import React from 'react'
+import DomUi from "./components/DomUi";
 function App() {
 
   return (
-    <div>App Page!</div>
+    <div>
+      <DomUi />
+    </div>
   )
 }
 
