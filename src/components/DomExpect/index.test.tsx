@@ -2,7 +2,7 @@ import React from "react";
 import {render, screen} from "@testing-library/react"
 import DomExpect from "./index";
 
-beforeEach(()=> {
+beforeEach(() => {
     render(<DomExpect/>)
 })
 
@@ -26,8 +26,8 @@ describe('页面元素断言', () => {
         const form = screen.getByRole('form')
         const username = screen.getByRole('textbox')
         const age = screen.getByRole('spinbutton')
-        const manCheckbox = screen.getByRole('radio', { checked: true })
-        const womanCheckbox = screen.getByRole('radio', { checked: false })
+        const manCheckbox = screen.getByRole('radio', {checked: true})
+        const womanCheckbox = screen.getByRole('radio', {checked: false})
         // 检查元素是否通过 disable 属性判断，而不是 aria-disabled
         expect(username).toBeDisabled()
         // 是否未被禁用，等同于 .not.toBeDisabled
@@ -48,5 +48,15 @@ describe('页面元素断言', () => {
         })
         // 与 toHaveFormValues 类似，不过不同的是 toHaveValue 验证某个单独的表单元素，而不是全部
         expect(age).toHaveValue(23)
+    })
+    it('代码层面验证', () => {
+        const [hiddenNote] = screen.getAllByRole('note', {hidden: true})
+        // 匹配元素是否具备某个值的属性
+        expect(hiddenNote).toHaveAttribute("aria-hidden")
+        // 匹配元素在类属性中是否包含某个类
+        expect(hiddenNote).toHaveClass('hidden')
+        //  匹配元素是否具有对应样式，需要注意的是，这个是精准非模糊匹配
+        //  display: none 无法匹配 display:none;color:#fff;
+        expect(hiddenNote).toHaveStyle('display: none')
     })
 })
